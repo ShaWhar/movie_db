@@ -1,0 +1,11 @@
+const String kAppTitle="Discover";
+const String kFetchingError="Fetching Error Occur";
+const String kBestPopularMoviesTitle="BEST POPLAR MOVIES AND SERIAL";
+const String kMovieShowTimeText="Check Movie\nShow times";
+const String kSeeMoreText="SEE MORE";
+const String kShowCaseTitle="SHOWCASES";
+const String kMoreShowCases="MORE SHOWCASES";
+const String kBestActorsTitle="BEST ACTORS";
+const String kMoreActors="MORE ACTORS";
+const String kAboutFilm="ABOUT FILM";
+const String kLikeMovies="YOU LIKE 13 MOVIES";
