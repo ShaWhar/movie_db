@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:movie_db_zoom/constant/strings.dart';
 import 'package:movie_db_zoom/data/apply/actors_apply.dart';
@@ -6,16 +5,15 @@ import 'package:movie_db_zoom/data/apply/cast_apply.dart';
 import 'package:movie_db_zoom/data/apply/cast_apply_impl.dart';
 import 'package:movie_db_zoom/data/apply/tmdb_apply.dart';
 import 'package:movie_db_zoom/data/apply/tmdb_apply_impl.dart';
-
 import '../constant/colors.dart';
 import '../constant/dimes.dart';
 import '../data/apply/actors_apply_impl.dart';
-import '../item_views/banner_section_item_view.dart';
-import '../item_views/best_actor_section_item_view.dart';
+import '../home_page_item_views/banner_section_item_view.dart';
+import '../home_page_item_views/best_actor_section_item_view.dart';
+import '../home_page_item_views/best_popular_movie_item_view.dart';
+import '../home_page_item_views/check_movie_item_view.dart';
+import '../home_page_item_views/show_case_section_item_view.dart';
 
-import '../item_views/best_popular_movie_item_view.dart';
-import '../item_views/check_movie_item_view.dart';
-import '../item_views/show_case_section_item_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -27,7 +25,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TMDBApply tmdbApply = TMDBApplyImpl();
   final PageController _controller = PageController();
-  final CastApply castView=CastApplyImpl();
+  final CastApply castApply=CastApplyImpl();
   final ActorsApply actorsView= ActorsApplyImpl();
 
 
@@ -79,7 +77,7 @@ class _HomePageState extends State<HomePage> {
             const CheckMovieItemView(),
             ShowCaseSectionItemView(
                 tmdbApply: tmdbApply, controller: _controller),
-            BestActorSectionItemView(  castView: castView, controller: _controller  ),
+            BestActorSectionItemView( controller: _controller, castApply: castApply,)
           ],
         ),
       ),

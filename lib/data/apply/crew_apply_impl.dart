@@ -1,7 +1,8 @@
 
-import 'package:movie_db_zoom/data/vos/cast_and_crew_vo/cast_and_crew_vo.dart';
+import 'package:movie_db_zoom/data/vos/cast_and_crew_vo/cast_vo.dart';
 import '../../network/data_agent/crew_data_agent.dart';
 import '../../network/data_agent/crew_data_agent_impl.dart';
+import '../vos/cast_and_crew_vo/crew_vo.dart';
 import 'crew_apply.dart';
 
 class CrewApplyImpl extends CrewApply{
@@ -12,7 +13,7 @@ class CrewApplyImpl extends CrewApply{
   factory CrewApplyImpl()=>_singleton;
 
   @override
-  Future<List<CastAndCrewVO>?> crewView(int page) =>
+  Future<List<CrewVO>?> crewView(int page) =>
       dataAgent.getCrew(page).then((value) {
     var temp=value;
     temp=temp?.map((e) {

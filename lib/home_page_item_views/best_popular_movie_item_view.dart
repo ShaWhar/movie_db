@@ -7,6 +7,7 @@ import '../constant/strings.dart';
 import '../data/apply/tmdb_apply.dart';
 import '../data/apply/tmdb_apply_impl.dart';
 import '../data/vos/movie_vo/movie_vo.dart';
+import '../pages/details_page.dart';
 import '../widgets/easy_text_widget.dart';
 
 class BestPopularMovieItemView extends StatefulWidget {
@@ -83,7 +84,13 @@ class _BestPopularMovieItemViewState extends State<BestPopularMovieItemView> {
                   itemCount: bestPopularMovies.length,
                   itemBuilder: (context, index) {
                     return BestPopularMoviesView(
-                        movie: bestPopularMovies[index]);
+                        movie: bestPopularMovies[index],
+                      onTap: (imageURL) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const DetailsPage(imageURL: 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
+                              )
+                        ));
+                      }, imageURL: '',);
                   }))
         ],
       ),
@@ -92,9 +99,15 @@ class _BestPopularMovieItemViewState extends State<BestPopularMovieItemView> {
 }
 
 class BestPopularMoviesView extends StatelessWidget {
-  const BestPopularMoviesView({Key? key, required this.movie})
+
+  const BestPopularMoviesView({Key? key,
+    required this.movie,
+    required this.onTap,
+    required this.imageURL})
       : super(key: key);
   final MovieVO movie;
+  final Function(String) onTap;
+  final String imageURL;
 
   @override
   Widget build(BuildContext context) {
@@ -107,10 +120,13 @@ class BestPopularMoviesView extends StatelessWidget {
         children: [
           Expanded(
               flex: 6,
-              child: BestPopularMoviesImageView(
-                imageURL: (movie.backdropPath != null)
-                    ? 'https://image.tmdb.org/t/p/w500${movie.backdropPath}'
-                    : 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
+              child: GestureDetector(
+                onTap: ()=> onTap(imageURL),
+                child: BestPopularMoviesImageView(
+                  imageURL: (movie.backdropPath != null)
+                      ? 'https://image.tmdb.org/t/p/w500${movie.backdropPath}'
+                      : 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
+                ),
               )),
           const SizedBox(
             height: 5,

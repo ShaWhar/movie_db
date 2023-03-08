@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_db_zoom/utils/string_extension.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../constant/colors.dart';
 import '../constant/dimes.dart';
 import '../data/apply/tmdb_apply.dart';
 import '../data/vos/movie_vo/movie_vo.dart';
+import '../pages/details_page.dart';
 
 class BannerSectionItemView extends StatelessWidget {
   const BannerSectionItemView({
@@ -77,7 +77,14 @@ class BannerMovieItemView extends StatelessWidget {
                       movieName: movies[index].originalTitle ?? '',
                       imageURL: (image != null)
                           ? 'https://image.tmdb.org/t/p/w500$image'
-                          : 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg');
+                          : 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
+                    onTap: (imageURL) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const DetailsPage(imageURL: 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',)
+                      ));
+                    },
+                  );
+
                 }),
           ),
           const SizedBox(
@@ -127,10 +134,14 @@ class SmoothPageIndicatorView extends StatelessWidget {
 
 class BannerImageView extends StatelessWidget {
   const BannerImageView(
-      {Key? key, required this.imageURL, required this.movieName})
+      {Key? key,
+        required this.imageURL,
+        required this.movieName,
+        required this.onTap})
       : super(key: key);
   final String imageURL;
   final String movieName;
+  final Function(String) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +154,9 @@ class BannerImageView extends StatelessWidget {
         const GradientView(),
 
         ///Play Button View
-        const Center(child: PlayButtonView()),
+        GestureDetector(
+            onTap: ()=> onTap(imageURL),
+            child: const Center(child: PlayButtonView())),
 
         /// Movie Title View
         MovieTitleView(

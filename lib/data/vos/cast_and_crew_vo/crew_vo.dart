@@ -1,10 +1,10 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'cast_and_crew_vo.g.dart';
+part 'crew_vo.g.dart';
 
 @JsonSerializable()
-class CastAndCrewVO {
+class CrewVO {
   @JsonKey(name: 'adult')
   bool? adult;
   @JsonKey(name: 'gender')
@@ -21,47 +21,40 @@ class CastAndCrewVO {
   double? popularity;
   @JsonKey(name: 'profile_path')
   String? profilePath;
-  @JsonKey(name: 'cast_id')
-  int? castId;
-  @JsonKey(name: 'character')
-  String? character;
   @JsonKey(name: 'credit_id')
   String? creditId;
-  @JsonKey(name: 'order')
-  int? order;
   @JsonKey(name: 'department')
   String? department;
   @JsonKey(name: 'job')
-  int? job;
-  bool? isCastView;
-
+  String? job;
   bool? isCrewView;
 
 
 
 
-  CastAndCrewVO(
+
+  CrewVO(
       this.adult,
-        this.gender,
-        this.id,
-        this.knownForDepartment,
-        this.name,
-        this.originalName,
-        this.popularity,
-        this.profilePath,
-        this.castId,
-        this.character,
-        this.creditId,
-        this.order,
-        this.department,
-        this.job,
-      {this.isCastView = false,
+      this.gender,
+      this.id,
+      this.knownForDepartment,
+      this.name,
+      this.originalName,
+      this.popularity,
+      this.profilePath,
+      this.creditId,
+      this.department,
+      this.job,
+
+
+      {
         this.isCrewView = false,
       });
 
 
-  factory CastAndCrewVO.fromJson(Map<String, dynamic> json) =>
-      _$CastAndCrewVOFromJson(json);
+  factory CrewVO.fromJson(Map<String, dynamic> json) =>
+      _$CrewVOFromJson(json);
+
 
 
 }

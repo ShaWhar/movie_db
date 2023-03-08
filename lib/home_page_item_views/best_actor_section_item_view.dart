@@ -1,20 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_db_zoom/data/vos/cast_and_crew_vo/cast_and_crew_vo.dart';
+import 'package:movie_db_zoom/data/apply/tmdb_apply.dart';
+import 'package:movie_db_zoom/data/vos/cast_and_crew_vo/cast_vo.dart';
 import '../constant/colors.dart';
 import '../constant/dimes.dart';
 import '../constant/strings.dart';
 import '../data/apply/cast_apply.dart';
+import '../data/vos/movie_vo/movie_vo.dart';
 import '../widgets/easy_text_widget.dart';
 
 class BestActorsItemView extends StatelessWidget {
   const BestActorsItemView(
-      {Key? key,
-        required this.cast,
+      {super.key,
+        required this.movie,
         required  this.pageController,
-      })
-      : super(key: key);
-  final List<CastAndCrewVO> cast;
+      });
+  final List<CastAndCrewVO> movie;
   final PageController pageController;
   @override
   Widget build(BuildContext context) {
@@ -42,16 +43,17 @@ class BestActorsItemView extends StatelessWidget {
                   color: kWhiteColor,
                 ),],),),
           Expanded(
+            flex: 3,
             child: ListView.builder(
               //shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemCount: cast.length,
+                itemCount: movie.length,
                 itemBuilder: (context, index) {
-                  var image = cast[index].profilePath;
+                  var image = movie[index].profilePath;
                   return ActorView(imageURL: (image != null)
                       ?  'https://image.tmdb.org/t/p/w500$image'
                       : 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
-                    actorName: cast[index].name ?? '',);
+                    movieName: movie[index].originalName ?? '',);
                 }),
           )
         ],
@@ -61,12 +63,11 @@ class BestActorsItemView extends StatelessWidget {
 }
 
 class ActorView extends StatelessWidget {
-  const ActorView({
-    Key? key,
+  const ActorView({super.key,
     required this.imageURL,
-    required this.actorName,});
+    required this.movieName,});
   final String imageURL;
-  final String actorName;
+  final String movieName;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -75,23 +76,24 @@ class ActorView extends StatelessWidget {
         width: kActorViewWidth,
         color: kGreyColor,
         child: Stack(children: [
-          ActorImageView(
-            key: Key(imageURL),
-            imageURL: imageURL,
+          Positioned.fill(
+            child: ActorImageView(
+              //key: Key(imageURL),
+              imageURL: imageURL,
+            ),
           ),
-          const Center(
+          const Positioned(
+            top: kSP5x,
+            right: kSP5x,
             child: Icon(
               Icons.favorite_border_outlined,
               color: kWhiteColor,
             ),
           ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: ActorTitleView(
-              actorName: actorName,
-              fontWeight: FontWeight.w600,
-              fontSize: 15,
-            ),
+          ActorTitleView(
+            movieName: movieName,
+            fontWeight: FontWeight.w600,
+            fontSize: 15,
           ),
         ]));
   }
@@ -99,10 +101,10 @@ class ActorView extends StatelessWidget {
 
 class BestActorSectionItemView extends StatefulWidget {
   const   BestActorSectionItemView({super.key,
-    required this.castView,
+    required this.castApply,
     required PageController controller,
   }) : _controller = controller;
-  final CastApply castView;
+  final CastApply castApply;
   final PageController _controller;
 
   @override
@@ -113,7 +115,7 @@ class _BestActorSectionItemViewState extends State<BestActorSectionItemView> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<CastAndCrewVO>?>(
-        future: widget.castView.castView(1),
+        future: widget.castApply.castView(1),
             //.then((actorsList) => <CastAndCrewVO> []),
         builder: (context, snapShot) {
           if (snapShot.connectionState == ConnectionState.waiting) {
@@ -126,12 +128,13 @@ class _BestActorSectionItemViewState extends State<BestActorSectionItemView> {
               child: Text("Fetching Error Occur"),
             );
           }
-          final List<CastAndCrewVO>? actorViewList =
-          snapShot.data?.take(5).cast<CastAndCrewVO>().toList();
+          final List<CastAndCrewVO>? movieViewList =
+          snapShot.data?.take(5).toList();
           return BestActorsItemView(
             pageController: widget._controller,
-            cast: actorViewList ?? [],
+            movie: movieViewList ?? [],
           );
+
 
         });
   }
@@ -140,11 +143,11 @@ class _BestActorSectionItemViewState extends State<BestActorSectionItemView> {
 class ActorTitleView extends StatelessWidget {
   const ActorTitleView(
       {super.key,
-        required this.actorName,
+        required this.movieName,
         required this.fontWeight,
         required this.fontSize,});
 
-  final String actorName;
+  final String movieName;
   final FontWeight fontWeight;
   final double fontSize;
 
@@ -157,7 +160,7 @@ class ActorTitleView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
-            actorName,
+            movieName,
             style: TextStyle(
               color: kWhiteColor,
               fontWeight: fontWeight,
@@ -172,22 +175,19 @@ class ActorTitleView extends StatelessWidget {
 }
 
 class ActorImageView extends StatelessWidget {
-  const ActorImageView({
-    Key? key,
+  const ActorImageView({super.key,
     required this.imageURL,});
   final String imageURL;
 
   @override
   Widget build(BuildContext context) {
-    return Positioned.fill(
-      child: CachedNetworkImage(
-        fit: BoxFit.cover,
-        imageUrl: imageURL,
-        placeholder: (context, url) =>
-        const Center(child: CircularProgressIndicator()),
-        errorWidget: (context, url, error) =>
-        const Center(child: Icon(Icons.error)),
-      ),
+    return CachedNetworkImage(
+      fit: BoxFit.cover,
+      imageUrl: imageURL,
+      placeholder: (context, url) =>
+      const Center(child: CircularProgressIndicator()),
+      errorWidget: (context, url, error) =>
+      const Center(child: Icon(Icons.error)),
     );
   }
 }
