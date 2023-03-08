@@ -15,7 +15,7 @@ class BestActorsItemView extends StatelessWidget {
         required this.movie,
         required  this.pageController,
       });
-  final List<CastAndCrewVO> movie;
+  final List<CastVO> movie;
   final PageController pageController;
   @override
   Widget build(BuildContext context) {
@@ -114,7 +114,7 @@ class BestActorSectionItemView extends StatefulWidget {
 class _BestActorSectionItemViewState extends State<BestActorSectionItemView> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<CastAndCrewVO>?>(
+    return FutureBuilder<List<CastVO>?>(
         future: widget.castApply.castView(1),
             //.then((actorsList) => <CastAndCrewVO> []),
         builder: (context, snapShot) {
@@ -128,7 +128,7 @@ class _BestActorSectionItemViewState extends State<BestActorSectionItemView> {
               child: Text("Fetching Error Occur"),
             );
           }
-          final List<CastAndCrewVO>? movieViewList =
+          final List<CastVO>? movieViewList =
           snapShot.data?.take(5).toList();
           return BestActorsItemView(
             pageController: widget._controller,
