@@ -18,8 +18,8 @@ class CrewDataAgentImpl extends CrewDataAgent {
   factory CrewDataAgentImpl() => _singleton;
 
   @override
-  Future<List<CrewVO>?> getCrew(int page) => _api
-      .getCastAndCrew(kAPIToken, page) //Future<MovieResponse>
+  Future<List<CrewVO>?> getCrew(int movieID) => _api
+      .getCastAndCrew(kAPIToken, movieID) //Future<MovieResponse>
       .asStream()
       .map((event) => event.crew)
       .first;

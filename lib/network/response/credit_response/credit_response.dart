@@ -14,7 +14,11 @@ class CreditResponse{
   List<CrewVO>? crew;
 
 
-  CreditResponse(this.id,);
+  CreditResponse(
+      this.id,
+      this.cast,
+      this.crew
+      );
   factory CreditResponse.fromJson(Map<String,dynamic> json) => _$CreditResponseFromJson(json);
 
 }

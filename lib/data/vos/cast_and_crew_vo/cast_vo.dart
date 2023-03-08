@@ -31,10 +31,6 @@ class CastVO {
   int? order;
   bool? isCastView;
 
-
-
-
-
   CastVO(
       this.adult,
         this.gender,
@@ -55,6 +51,11 @@ class CastVO {
 
   factory CastVO.fromJson(Map<String, dynamic> json) =>
       _$CastVOFromJson(json);
+
+  @override
+  String toString() {
+    return 'CastVO{name: $name}';
+  }
 
 
 

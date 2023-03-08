@@ -17,8 +17,8 @@ class CastDataAgentImpl extends CastDataAgent {
   factory CastDataAgentImpl() => _singleton;
 
   @override
-  Future<List<CastVO>?> getCast(int page) => _api
-      .getCastAndCrew(kAPIToken, page) //Future<MovieResponse>
+  Future<List<CastVO>?> getCast(int movieID) => _api
+      .getCastAndCrew(kAPIToken, movieID) //Future<MovieResponse>
       .asStream()
       .map((event) => event.cast)
       .first;

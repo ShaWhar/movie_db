@@ -15,7 +15,7 @@ class BestActorsItemView extends StatelessWidget {
         required this.movie,
         required  this.pageController,
       });
-  final List<CastVO> movie;
+  final List<MovieVO> movie;
   final PageController pageController;
   @override
   Widget build(BuildContext context) {
@@ -49,11 +49,11 @@ class BestActorsItemView extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: movie.length,
                 itemBuilder: (context, index) {
-                  var image = movie[index].profilePath;
+                  var image = movie[index].backdropPath;
                   return ActorView(imageURL: (image != null)
                       ?  'https://image.tmdb.org/t/p/w500$image'
                       : 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
-                    movieName: movie[index].originalName ?? '',);
+                    movieName: movie[index].title ?? '',);
                 }),
           )
         ],
@@ -104,7 +104,7 @@ class BestActorSectionItemView extends StatefulWidget {
     required this.castApply,
     required PageController controller,
   }) : _controller = controller;
-  final CastApply castApply;
+  final TMDBApply castApply;
   final PageController _controller;
 
   @override
@@ -114,8 +114,8 @@ class BestActorSectionItemView extends StatefulWidget {
 class _BestActorSectionItemViewState extends State<BestActorSectionItemView> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<CastVO>?>(
-        future: widget.castApply.castView(1),
+    return FutureBuilder<List<MovieVO>?>(
+        future: widget.castApply.getNowPlayingMovie(1),
             //.then((actorsList) => <CastAndCrewVO> []),
         builder: (context, snapShot) {
           if (snapShot.connectionState == ConnectionState.waiting) {
@@ -128,7 +128,7 @@ class _BestActorSectionItemViewState extends State<BestActorSectionItemView> {
               child: Text("Fetching Error Occur"),
             );
           }
-          final List<CastVO>? movieViewList =
+          final List<MovieVO>? movieViewList =
           snapShot.data?.take(5).toList();
           return BestActorsItemView(
             pageController: widget._controller,

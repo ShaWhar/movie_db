@@ -12,7 +12,7 @@ class CastApplyImpl extends CastApply{
   factory CastApplyImpl()=>_singleton;
 
   @override
-  Future<List<CastVO>?> castView(int page) =>dataAgent.getCast(page).then((value) {
+  Future<List<CastVO>?> castView(int movieID) =>dataAgent.getCast(movieID).then((value) {
     var temp=value;
     temp=temp?.map((e) {
       e.isCastView=true;

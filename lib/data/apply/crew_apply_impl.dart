@@ -13,8 +13,8 @@ class CrewApplyImpl extends CrewApply{
   factory CrewApplyImpl()=>_singleton;
 
   @override
-  Future<List<CrewVO>?> crewView(int page) =>
-      dataAgent.getCrew(page).then((value) {
+  Future<List<CrewVO>?> crewView(int movieID) =>
+      dataAgent.getCrew(movieID).then((value) {
     var temp=value;
     temp=temp?.map((e) {
       e.isCrewView=true;

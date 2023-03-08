@@ -77,7 +77,8 @@ class _HomePageState extends State<HomePage> {
             const CheckMovieItemView(),
             ShowCaseSectionItemView(
                 tmdbApply: tmdbApply, controller: _controller),
-            BestActorSectionItemView( controller: _controller, castApply: castApply,)
+            BestActorSectionItemView( controller: _controller, castApply: tmdbApply ,),
+
           ],
         ),
       ),

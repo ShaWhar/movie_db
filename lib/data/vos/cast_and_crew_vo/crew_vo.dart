@@ -55,6 +55,11 @@ class CrewVO {
   factory CrewVO.fromJson(Map<String, dynamic> json) =>
       _$CrewVOFromJson(json);
 
+  @override
+  String toString() {
+    return 'CrewVO{name: $name}';
+  }
+
 
 
 }
