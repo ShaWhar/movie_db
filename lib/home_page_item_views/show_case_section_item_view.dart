@@ -11,6 +11,46 @@ import '../pages/details_page.dart';
 import '../widgets/easy_text_widget.dart';
 import 'banner_section_item_view.dart';
 
+class ShowCaseSectionItemView extends StatefulWidget {
+  const ShowCaseSectionItemView({
+    super.key,
+    required this.tmdbApply,
+    required PageController controller,
+  }) : _controller = controller;
+
+  final TMDBApply tmdbApply;
+  final PageController _controller;
+
+  @override
+  State<ShowCaseSectionItemView> createState() => _ShowCaseSectionItemViewState();
+}
+
+class _ShowCaseSectionItemViewState extends State<ShowCaseSectionItemView> {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<MovieVO>?>(
+        future: widget.tmdbApply.getNowPlayingMovie(1),
+        builder: (context, snapShot) {
+          if (snapShot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapShot.hasError) {
+            return const Center(
+              child: Text("Fetching Error Occur"),
+            );
+          }
+          final List<MovieVO>? showCaseMovieList =
+          snapShot.data?.take(5).toList();
+          return ShowCaseItemView(
+            pageController: widget._controller,
+            movies: showCaseMovieList ?? [],
+          );
+        });
+  }
+}
+
 class ShowCaseItemView extends StatelessWidget {
   const ShowCaseItemView(
       {Key? key,
@@ -64,8 +104,9 @@ class ShowCaseItemView extends StatelessWidget {
                     releaseDate: movies[index].releaseDate ?? '',
                     onTap: (imageURL) {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const DetailsPage(imageURL:
-                          'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',)
+                          builder: (context) => const DetailsPage(
+                            //imageURL: 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
+                            movieID: 1,)
                       ));
                     },
 
@@ -112,46 +153,6 @@ class ShowCaseView extends StatelessWidget {
           ]),
         ));
   }}
-
-class ShowCaseSectionItemView extends StatefulWidget {
-  const ShowCaseSectionItemView({
-    super.key,
-    required this.tmdbApply,
-    required PageController controller,
-  }) : _controller = controller;
-
-  final TMDBApply tmdbApply;
-  final PageController _controller;
-
-  @override
-  State<ShowCaseSectionItemView> createState() => _ShowCaseSectionItemViewState();
-}
-
-class _ShowCaseSectionItemViewState extends State<ShowCaseSectionItemView> {
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<List<MovieVO>?>(
-        future: widget.tmdbApply.getNowPlayingMovie(1),
-        builder: (context, snapShot) {
-          if (snapShot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapShot.hasError) {
-            return const Center(
-              child: Text("Fetching Error Occur"),
-            );
-          }
-          final List<MovieVO>? showCaseMovieList =
-          snapShot.data?.take(5).toList();
-          return ShowCaseItemView(
-            pageController: widget._controller,
-            movies: showCaseMovieList ?? [],
-          );
-        });
-  }
-}
 
 class ShowCaseTitleView extends StatelessWidget {
   const ShowCaseTitleView(

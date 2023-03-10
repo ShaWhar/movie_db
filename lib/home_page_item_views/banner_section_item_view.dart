@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../constant/api_constant.dart';
 import '../constant/colors.dart';
 import '../constant/dimes.dart';
 import '../data/apply/tmdb_apply.dart';
@@ -51,11 +52,14 @@ class BannerMovieItemView extends StatelessWidget {
       {Key? key,
         required this.movies,
         required this.pageController,
-        required this.onDottedClick})
+        required this.onDottedClick,
+        //required this.movieID
+      })
       : super(key: key);
   final List<MovieVO> movies;
   final PageController pageController;
   final Function(int) onDottedClick;
+  //final int movieID;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +84,9 @@ class BannerMovieItemView extends StatelessWidget {
                           : 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
                     onTap: (imageURL) {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const DetailsPage(imageURL: 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',)
+                          builder: (context) => const DetailsPage(
+                            //imageURL: 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
+                            movieID: 1,)
                       ));
                     },
                   );

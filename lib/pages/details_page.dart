@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_db_zoom/home_page_item_views/check_movie_item_view.dart';
 import '../constant/colors.dart';
 import '../data/apply/actors_apply.dart';
 import '../data/apply/actors_apply_impl.dart';
@@ -10,10 +11,13 @@ import '../data/vos/movie_vo/movie_vo.dart';
 import '../details_page_item_views/sliver_app_bar_item_view.dart';
 
 class DetailsPage extends StatefulWidget {
+  final int movieID;
   const DetailsPage({
     Key? key,
-    required imageURL,
+    //required imageURL,
+    required this.movieID,
   }) : super(key: key);
+
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -41,14 +45,17 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: NestedScrollView(
-      floatHeaderSlivers: true,
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
-        const SliverAppBarItemView()
-            ],
-                body: Container(
-                  width: double.infinity,
-                  height: 250,
-                  color: kWhiteColor,
+                  floatHeaderSlivers: true,
+                  headerSliverBuilder:
+                      (BuildContext context, bool innerBoxIsScrolled) => [const
+                          CheckMovieTextView()
+                      //SliverAppBarItemView()
+                      ],
+
+                      body: Container(
+                      width: double.infinity,
+                      height: 250,
+                      color: kWhiteColor,
                 ),
     ));
   }

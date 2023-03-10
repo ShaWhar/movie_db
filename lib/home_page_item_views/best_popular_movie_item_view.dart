@@ -87,7 +87,9 @@ class _BestPopularMovieItemViewState extends State<BestPopularMovieItemView> {
                         movie: bestPopularMovies[index],
                       onTap: (imageURL) {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const DetailsPage(imageURL: 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
+                            builder: (context) => const DetailsPage(
+                              //imageURL: 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
+                              movieID: 1,
                               )
                         ));
                       }, imageURL: '',);

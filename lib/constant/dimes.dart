@@ -16,10 +16,11 @@ const double kCheckMovieTextViewHeight=160;
 const double kPlaceIconWidth=200;
 const double kBestActorTitleSizedBoxHeight=45;
 const double kActorsSizedBoxWidth=160;
-const double kActorViewWidth=130;
+const double kActorViewWidth=135;
 const double kActorViewHeight=150;
 const double kExpandedHeight=220;
 const double kDetailsPageHeaderContainerHeight=220;
+const double kDateAndRatingViewSizedBoxWidth=135;
 
 
 
@@ -41,8 +42,10 @@ const double kSP120x=120;
 const double kPlayButtonSize=50;
 const FontWeight kFontWeight600=FontWeight.w600;
 const double kFontSize13=13;
+const double kFontSize14=14;
 const double kFontSize16=16;
 const double kFontSize23=23;
 const double kFontSize20=20;
+const double kFontSize28=28;
 const double kPlaceIconSize=40;
 const double kSearchIconSize=30;

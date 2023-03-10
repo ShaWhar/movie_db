@@ -22,7 +22,7 @@ const String kAPIToken='6ba57a8fa213613268b61de49d70fffe';
 const String kAPIKey='api_key';
 const String kPageKey='page';
 const String kQueryParamsWithGenre='genreID';
-//const String kLanguageKey='language';
+const String kLanguageKey='language';
 
 ///Path Parameter
 const String kPathParameterMovieID='movie_id';

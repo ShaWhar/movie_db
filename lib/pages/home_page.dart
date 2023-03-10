@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   final TMDBApply tmdbApply = TMDBApplyImpl();
   final PageController _controller = PageController();
   final CastApply castApply=CastApplyImpl();
-  final ActorsApply actorsView= ActorsApplyImpl();
+  final ActorsApply actorsApply= ActorsApplyImpl();
 
 
   @override
@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
             const CheckMovieItemView(),
             ShowCaseSectionItemView(
                 tmdbApply: tmdbApply, controller: _controller),
-            BestActorSectionItemView( controller: _controller, castApply: tmdbApply ,),
+            BestActorSectionItemView( controller: _controller, actorsApply: actorsApply ,),
 
           ],
         ),

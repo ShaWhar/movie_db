@@ -13,7 +13,7 @@ class ActorsApplyImpl extends ActorsApply{
   factory ActorsApplyImpl()=>_singleton;
 
   @override
-  Future<List<ActorsVO>?> actorsView(int page) =>dataAgent.getActors(page).then((value) {
+  Future<List<ActorsVO>?> getActors(int page) =>dataAgent.getActors(page).then((value) {
     var temp=value;
     temp=temp?.map((e) {
       e.isActorsView=true;

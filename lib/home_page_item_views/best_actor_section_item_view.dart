@@ -1,24 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_db_zoom/data/apply/tmdb_apply.dart';
-import 'package:movie_db_zoom/data/vos/cast_and_crew_vo/cast_vo.dart';
+import 'package:movie_db_zoom/constant/api_constant.dart';
 import '../constant/colors.dart';
 import '../constant/dimes.dart';
 import '../constant/strings.dart';
-import '../data/apply/cast_apply.dart';
-import '../data/vos/movie_vo/movie_vo.dart';
+import '../data/apply/actors_apply.dart';
+import '../data/vos/actors_vo/actors_vo.dart';
 import '../widgets/easy_text_widget.dart';
 
 class BestActorsItemView extends StatelessWidget {
-  const BestActorsItemView(
+  BestActorsItemView(
       {super.key,
-        required this.movie,
+        required this.actors,
         required  this.pageController,
       });
-  final List<MovieVO> movie;
+   List<ActorsVO>? actors;
   final PageController pageController;
   @override
   Widget build(BuildContext context) {
+    print('actors: $actors?.length');
     return Container(
       width: double.infinity,
       height: kBestActorHeight,
@@ -43,17 +43,20 @@ class BestActorsItemView extends StatelessWidget {
                   color: kWhiteColor,
                 ),],),),
           Expanded(
-            flex: 3,
+            flex: 2,
             child: ListView.builder(
               //shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemCount: movie.length,
+                itemCount: actors?.length,
                 itemBuilder: (context, index) {
-                  var image = movie[index].backdropPath;
-                  return ActorView(imageURL: (image != null)
-                      ?  'https://image.tmdb.org/t/p/w500$image'
+                  var image = actors?[index].profilePath;
+                  print(actors?[index].profilePath);
+
+                  return ActorView(imageURL: (image != null) ?
+                  'https://image.tmdb.org/t/p/w500$image'
                       : 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
-                    movieName: movie[index].title ?? '',);
+                    actorName: actors?[index].name ?? '',);
+
                 }),
           )
         ],
@@ -65,9 +68,9 @@ class BestActorsItemView extends StatelessWidget {
 class ActorView extends StatelessWidget {
   const ActorView({super.key,
     required this.imageURL,
-    required this.movieName,});
+    required this.actorName,});
   final String imageURL;
-  final String movieName;
+  final String actorName;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -91,7 +94,7 @@ class ActorView extends StatelessWidget {
             ),
           ),
           ActorTitleView(
-            movieName: movieName,
+            actorsName: actorName,
             fontWeight: FontWeight.w600,
             fontSize: 15,
           ),
@@ -101,10 +104,10 @@ class ActorView extends StatelessWidget {
 
 class BestActorSectionItemView extends StatefulWidget {
   const   BestActorSectionItemView({super.key,
-    required this.castApply,
+    required this.actorsApply,
     required PageController controller,
   }) : _controller = controller;
-  final TMDBApply castApply;
+  final ActorsApply actorsApply;
   final PageController _controller;
 
   @override
@@ -114,8 +117,8 @@ class BestActorSectionItemView extends StatefulWidget {
 class _BestActorSectionItemViewState extends State<BestActorSectionItemView> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<MovieVO>?>(
-        future: widget.castApply.getNowPlayingMovie(1),
+    return FutureBuilder<List<ActorsVO>?>(
+        future: widget.actorsApply.getActors(1),
             //.then((actorsList) => <CastAndCrewVO> []),
         builder: (context, snapShot) {
           if (snapShot.connectionState == ConnectionState.waiting) {
@@ -128,11 +131,11 @@ class _BestActorSectionItemViewState extends State<BestActorSectionItemView> {
               child: Text("Fetching Error Occur"),
             );
           }
-          final List<MovieVO>? movieViewList =
+          final List<ActorsVO>? actorViewList =
           snapShot.data?.take(5).toList();
           return BestActorsItemView(
             pageController: widget._controller,
-            movie: movieViewList ?? [],
+            actors: actorViewList ?? [],
           );
 
 
@@ -143,11 +146,11 @@ class _BestActorSectionItemViewState extends State<BestActorSectionItemView> {
 class ActorTitleView extends StatelessWidget {
   const ActorTitleView(
       {super.key,
-        required this.movieName,
+        required this.actorsName,
         required this.fontWeight,
         required this.fontSize,});
 
-  final String movieName;
+  final String actorsName;
   final FontWeight fontWeight;
   final double fontSize;
 
@@ -160,7 +163,7 @@ class ActorTitleView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
-            movieName,
+            actorsName,
             style: TextStyle(
               color: kWhiteColor,
               fontWeight: fontWeight,

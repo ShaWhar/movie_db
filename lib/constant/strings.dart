@@ -9,3 +9,4 @@ const String kBestActorsTitle="BEST ACTORS";
 const String kMoreActors="MORE ACTORS";
 const String kAboutFilm="ABOUT FILM";
 const String kLikeMovies="YOU LIKE 13 MOVIES";
+const String kVoting="8045 VOTES";
