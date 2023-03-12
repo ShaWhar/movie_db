@@ -5,6 +5,8 @@ import '../constant/api_constant.dart';
 import '../constant/colors.dart';
 import '../constant/dimes.dart';
 import '../data/apply/tmdb_apply.dart';
+import '../data/vos/details_vo/details_vo.dart';
+import '../data/vos/genres_vo/genres_vo.dart';
 import '../data/vos/movie_vo/movie_vo.dart';
 import '../pages/details_page.dart';
 
@@ -12,11 +14,13 @@ class BannerSectionItemView extends StatelessWidget {
   const BannerSectionItemView({
     super.key,
     required this.tmdbApply,
-    required PageController controller,
+    required PageController controller, required this.details, required this.genres,
   }) : _controller = controller;
 
   final TMDBApply tmdbApply;
   final PageController _controller;
+  final DetailsVO details;
+  final GenresVO genres;
 
   @override
   Widget build(BuildContext context) {
@@ -41,25 +45,30 @@ class BannerSectionItemView extends StatelessWidget {
                   duration: const Duration(seconds: 1), curve: Curves.easeIn);
             },
             pageController: _controller,
-            movies: bannerMovieList ?? [],
+            movies: bannerMovieList ?? [], details: details,
+            genres: genres,
           );
         });
   }
 }
 
 class BannerMovieItemView extends StatelessWidget {
+
+
   const BannerMovieItemView(
       {Key? key,
         required this.movies,
         required this.pageController,
         required this.onDottedClick,
+        required this.details, required this.genres,
         //required this.movieID
       })
       : super(key: key);
   final List<MovieVO> movies;
   final PageController pageController;
   final Function(int) onDottedClick;
-  //final int movieID;
+  final DetailsVO details;
+  final GenresVO genres;
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +90,16 @@ class BannerMovieItemView extends StatelessWidget {
                       movieName: movies[index].originalTitle ?? '',
                       imageURL: (image != null)
                           ? 'https://image.tmdb.org/t/p/w500$image'
-                          : 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
+                          : kDefaultImage,
                     onTap: (imageURL) {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const DetailsPage(
+                          builder: (context) =>   DetailsPage(
                             //imageURL: 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
-                            movieID: 1,)
+                            movieID: 1,
+                            actors: [],
+                            details: details,
+                            genres: genres,
+                          )
                       ));
                     },
                   );

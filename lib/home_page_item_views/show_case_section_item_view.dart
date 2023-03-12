@@ -6,6 +6,9 @@ import '../constant/colors.dart';
 import '../constant/dimes.dart';
 import '../constant/strings.dart';
 import '../data/apply/tmdb_apply.dart';
+import '../data/vos/actors_vo/actors_vo.dart';
+import '../data/vos/details_vo/details_vo.dart';
+import '../data/vos/genres_vo/genres_vo.dart';
 import '../data/vos/movie_vo/movie_vo.dart';
 import '../pages/details_page.dart';
 import '../widgets/easy_text_widget.dart';
@@ -15,17 +18,28 @@ class ShowCaseSectionItemView extends StatefulWidget {
   const ShowCaseSectionItemView({
     super.key,
     required this.tmdbApply,
-    required PageController controller,
+    required PageController controller, required this.actors, required this.details, required this.genres,
   }) : _controller = controller;
 
   final TMDBApply tmdbApply;
   final PageController _controller;
+  final List<ActorsVO> actors;
+  final DetailsVO details;
+  final GenresVO genres;
+
 
   @override
-  State<ShowCaseSectionItemView> createState() => _ShowCaseSectionItemViewState();
+  State<ShowCaseSectionItemView> createState() => _ShowCaseSectionItemViewState(actors,details,genres);
 }
 
 class _ShowCaseSectionItemViewState extends State<ShowCaseSectionItemView> {
+  final List<ActorsVO> actors;
+  final DetailsVO details;
+  final GenresVO genres;
+
+  _ShowCaseSectionItemViewState(this.actors,this.details, this.genres);
+
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<MovieVO>?>(
@@ -46,20 +60,31 @@ class _ShowCaseSectionItemViewState extends State<ShowCaseSectionItemView> {
           return ShowCaseItemView(
             pageController: widget._controller,
             movies: showCaseMovieList ?? [],
+            actors: actors,
+            genres: genres,
+            details: details ,
           );
         });
   }
 }
 
 class ShowCaseItemView extends StatelessWidget {
+  
+
   const ShowCaseItemView(
       {Key? key,
         required this.movies,
         required this.pageController,
+        required this.actors, required this.genres,
+        required this.details,
+        
       })
       : super(key: key);
   final List<MovieVO> movies;
   final PageController pageController;
+  final List<ActorsVO> actors;
+  final GenresVO genres;
+  final DetailsVO details;
 
 
   @override
@@ -104,9 +129,11 @@ class ShowCaseItemView extends StatelessWidget {
                     releaseDate: movies[index].releaseDate ?? '',
                     onTap: (imageURL) {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const DetailsPage(
+                          builder: (context) =>   DetailsPage(
                             //imageURL: 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
-                            movieID: 1,)
+                            movieID: 1,
+                            actors: actors, genres: genres, details: details,
+                          )
                       ));
                     },
 

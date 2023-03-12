@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_db_zoom/constant/api_constant.dart';
 import '../constant/colors.dart';
 import '../constant/dimes.dart';
 import '../constant/strings.dart';
@@ -8,17 +7,19 @@ import '../data/apply/actors_apply.dart';
 import '../data/vos/actors_vo/actors_vo.dart';
 import '../widgets/easy_text_widget.dart';
 
-class BestActorsItemView extends StatelessWidget {
-  BestActorsItemView(
+class ActorsAndCreatorsSectionItemView extends StatelessWidget {
+  const ActorsAndCreatorsSectionItemView(
       {super.key,
         required this.actors,
         required  this.pageController,
+        required this.title1, required this.title2,
       });
-   List<ActorsVO>? actors;
+   final List<ActorsVO> actors;
   final PageController pageController;
+  final String title1;
+  final String title2;
   @override
   Widget build(BuildContext context) {
-    print('actors: $actors?.length');
     return Container(
       width: double.infinity,
       height: kBestActorHeight,
@@ -31,15 +32,15 @@ class BestActorsItemView extends StatelessWidget {
             height: kBestActorTitleSizedBoxHeight,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children:  [
                 EasyTextWidget(
-                  text: kBestActorsTitle,
+                  text: title1,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: kActorsSizedBoxWidth,
                 ),
                 EasyTextWidget(
-                  text: kMoreActors,
+                  text: title2,
                   color: kWhiteColor,
                 ),],),),
           Expanded(
@@ -47,15 +48,13 @@ class BestActorsItemView extends StatelessWidget {
             child: ListView.builder(
               //shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemCount: actors?.length,
+                itemCount: actors.length,
                 itemBuilder: (context, index) {
-                  var image = actors?[index].profilePath;
-                  print(actors?[index].profilePath);
-
+                  var image = actors[index].profilePath;
                   return ActorView(imageURL: (image != null) ?
                   'https://image.tmdb.org/t/p/w500$image'
                       : 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
-                    actorName: actors?[index].name ?? '',);
+                    actorName: actors[index].name ?? '',);
 
                 }),
           )
@@ -133,9 +132,9 @@ class _BestActorSectionItemViewState extends State<BestActorSectionItemView> {
           }
           final List<ActorsVO>? actorViewList =
           snapShot.data?.take(5).toList();
-          return BestActorsItemView(
+          return ActorsAndCreatorsSectionItemView(
             pageController: widget._controller,
-            actors: actorViewList ?? [],
+            actors: actorViewList ?? [], title1: kBestActorsTitle, title2: kMoreActors,
           );
 
 

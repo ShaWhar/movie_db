@@ -1,23 +1,30 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
 import '../constant/colors.dart';
-import '../constant/strings.dart';
 import '../data/apply/tmdb_apply.dart';
 import '../data/apply/tmdb_apply_impl.dart';
+import '../data/vos/details_vo/details_vo.dart';
+import '../data/vos/genres_vo/genres_vo.dart';
 import '../data/vos/movie_vo/movie_vo.dart';
 import '../pages/details_page.dart';
 import '../widgets/easy_text_widget.dart';
 
 class BestPopularMovieItemView extends StatefulWidget {
+  final String title;
+  final DetailsVO details;
+  final GenresVO genres;
+
+
   const BestPopularMovieItemView({
-    super.key,
+    super.key, required this.title, required this.details, required this.genres,
+
+
   });
 
   @override
   State<BestPopularMovieItemView> createState() =>
-      _BestPopularMovieItemViewState();
+      _BestPopularMovieItemViewState(title,details,genres);
 }
 
 class _BestPopularMovieItemViewState extends State<BestPopularMovieItemView> {
@@ -25,6 +32,13 @@ class _BestPopularMovieItemViewState extends State<BestPopularMovieItemView> {
   List<MovieVO> bestPopularMovies = [];
   final TMDBApply tmdbApply = TMDBApplyImpl();
   int page = 1;
+  final String title;
+  final DetailsVO details;
+  final GenresVO genres;
+  _BestPopularMovieItemViewState(this.title, this.details, this.genres);
+
+
+
 
   @override
   void initState() {
@@ -71,10 +85,10 @@ class _BestPopularMovieItemViewState extends State<BestPopularMovieItemView> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+           Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
               child: EasyTextWidget(
-                text: kBestPopularMoviesTitle,
+                text: title,
               )),
           Expanded(
               child: ListView.builder(
@@ -87,9 +101,12 @@ class _BestPopularMovieItemViewState extends State<BestPopularMovieItemView> {
                         movie: bestPopularMovies[index],
                       onTap: (imageURL) {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const DetailsPage(
+                            builder: (context) =>  DetailsPage(
                               //imageURL: 'https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg',
                               movieID: 1,
+                              actors: [],
+                              details: details,
+                              genres: genres,
                               )
                         ));
                       }, imageURL: '',);

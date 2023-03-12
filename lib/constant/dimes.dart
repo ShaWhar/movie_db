@@ -21,6 +21,11 @@ const double kActorViewHeight=150;
 const double kExpandedHeight=220;
 const double kDetailsPageHeaderContainerHeight=220;
 const double kDateAndRatingViewSizedBoxWidth=135;
+const double kMovieGenreAndStorylineContainerHeight=300;
+const double kMovieButtonMInWidth=50;
+const double kMovieButtonHeight=40;
+const double kMovieGenreWidth=89;
+const double kMovieGenreHeight=30;
 
 
 

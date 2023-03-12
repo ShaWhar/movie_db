@@ -9,7 +9,7 @@ import '../constant/colors.dart';
 import '../constant/dimes.dart';
 import '../data/apply/actors_apply_impl.dart';
 import '../home_page_item_views/banner_section_item_view.dart';
-import '../home_page_item_views/best_actor_section_item_view.dart';
+import '../home_page_item_views/actors_and_creators_section_item_view.dart';
 import '../home_page_item_views/best_popular_movie_item_view.dart';
 import '../home_page_item_views/check_movie_item_view.dart';
 import '../home_page_item_views/show_case_section_item_view.dart';
@@ -28,6 +28,9 @@ class _HomePageState extends State<HomePage> {
   final CastApply castApply=CastApplyImpl();
   final ActorsApply actorsApply= ActorsApplyImpl();
 
+  var details;
+  var genres;
+
 
   @override
   void initState() {
@@ -42,6 +45,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.black38,
       appBar: AppBar(
@@ -70,13 +74,13 @@ class _HomePageState extends State<HomePage> {
             ///Banner Section
 
             BannerSectionItemView(
-                tmdbApply: tmdbApply, controller: _controller),
+                tmdbApply: tmdbApply, controller: _controller, details: details, genres: genres,),
 
             //  /Best Popular Movie And Serial Section
-            const BestPopularMovieItemView(),
+              BestPopularMovieItemView(title: kBestPopularMoviesTitle, details: details, genres: genres,),
             const CheckMovieItemView(),
             ShowCaseSectionItemView(
-                tmdbApply: tmdbApply, controller: _controller),
+                tmdbApply: tmdbApply, controller: _controller, actors: [], genres: genres, details: details,),
             BestActorSectionItemView( controller: _controller, actorsApply: actorsApply ,),
 
           ],

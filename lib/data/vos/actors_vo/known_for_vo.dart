@@ -62,7 +62,7 @@ class KnownFor{
         this.video});
 
   factory KnownFor.fromJson(Map<String, dynamic> json) =>
-      _$KnownForVOFromJson(json);
+      _$KnownForFromJson(json);
 
 
 

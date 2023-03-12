@@ -28,7 +28,8 @@ const String kLanguageKey='language';
 const String kPathParameterMovieID='movie_id';
 
 ///Image const
-const String kPrefixImageLink='';
-const String kDefaultImage='';
+const String kBasedURL='https://image.tmdb.org/t/p/w500';
+const String kDefaultImage='https://pusat.edu.np/wp-content/uploads/2022/09/default-image.jpg';
+
 
 
